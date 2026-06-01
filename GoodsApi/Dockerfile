@@ -5,7 +5,6 @@ EXPOSE 8080
 EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["GoodsApi.csproj", "./"]
 RUN dotnet restore "./GoodsApi.csproj"
@@ -13,7 +12,6 @@ COPY . .
 RUN dotnet build "./GoodsApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./GoodsApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

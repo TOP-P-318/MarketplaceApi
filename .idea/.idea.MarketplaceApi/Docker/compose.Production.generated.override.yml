@@ -1,0 +1,20 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  goods-api:
+    build:
+      context: "C:\\Users\\shamr\\RiderProjects\\MarketplaceApi"
+      dockerfile: "GoodsApi/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/GoodsApi.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "goods-api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\shamr\\RiderProjects\\MarketplaceApi\\GoodsApi:/app:rw"
+    - "C:\\Users\\shamr\\RiderProjects\\MarketplaceApi:/src:rw"
+    - "C:\\Users\\shamr\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

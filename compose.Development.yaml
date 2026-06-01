@@ -1,0 +1,14 @@
+﻿name: marketplace-api-dev
+services:
+  goods-api:
+    image: goods-api-dev
+    build:
+      context: .
+      dockerfile: GoodsApi/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+    ports:
+      - "6032:8080"
