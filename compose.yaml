@@ -1,0 +1,10 @@
+﻿name: marketplace-api
+services:
+  goods-api:
+    image: goods-api
+    build:
+      context: .
+      dockerfile: GoodsApi/Dockerfile
+
+    ports:
+      - "5032:8080"
