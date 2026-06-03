@@ -1,4 +1,4 @@
-namespace GoodsApi;
+namespace ProductsApi;
 
 public static class Program
 {

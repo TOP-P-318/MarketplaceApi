@@ -1,10 +1,10 @@
 ﻿name: marketplace-api
 services:
-  goods-api:
-    image: goods-api
+  products-api:
+    image: products-api
     build:
       context: .
-      dockerfile: GoodsApi/Dockerfile
+      dockerfile: ProductsApi/Dockerfile
       args:
         BUILD_CONFIGURATION: Release
     environment:
