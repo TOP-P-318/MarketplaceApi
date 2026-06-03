@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodsApi", "GoodsApi\GoodsApi.csproj", "{0C69EE35-B780-4DA9-A679-33292D82291F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductsApi", "ProductsApi\ProductsApi.csproj", "{0C69EE35-B780-4DA9-A679-33292D82291F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA348A08-D53A-4A60-9ADC-8E182DA4D29D}"
 	ProjectSection(SolutionItems) = preProject
