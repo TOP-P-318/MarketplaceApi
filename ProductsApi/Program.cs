@@ -1,3 +1,5 @@
+using ProductsApi.Modules.Products.Domain.Mappers;
+
 namespace ProductsApi;
 
 public static class Program
@@ -12,12 +14,22 @@ public static class Program
         builder.Services.AddAuthorization();
 
         #endregion
-        
+
         #region API Docs
 
         builder.Services.AddOpenApi();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        #endregion
+
+        #region DI
+
+        #region Mappers
+
+        builder.Services.AddSingleton<IProductMapper, ProductMapper>();
+
+        #endregion
 
         #endregion
 
