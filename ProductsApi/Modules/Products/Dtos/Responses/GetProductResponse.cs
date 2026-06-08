@@ -1,10 +1,16 @@
-﻿using ProductsApi.Modules.Products.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using ProductsApi.Modules.Products.Domain.Models;
 
 namespace ProductsApi.Modules.Products.Dtos.Responses;
 
-public sealed class GetProductResponse
+public sealed record GetProductResponse
 {
-    public string Name { get; private init; } = string.Empty;
+    [Required] public required Guid Id { get; init; }
+    [Required] public required string Name { get; init; } = string.Empty;
 
-    public static GetProductResponse CreateFrom(ProductModel product) => new() { Name = product.Name };
+    public static GetProductResponse CreateFrom(ProductModel product) => new()
+    {
+        Id = product.Id,
+        Name = product.Name
+    };
 }
