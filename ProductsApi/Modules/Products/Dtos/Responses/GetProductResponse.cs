@@ -6,11 +6,15 @@ namespace ProductsApi.Modules.Products.Dtos.Responses;
 public sealed record GetProductResponse
 {
     [Required] public required Guid Id { get; init; }
-    [Required] public required string Name { get; init; } = string.Empty;
+    [Required] public required string Name { get; init; }
+    [Required] public required DateTime CreatedAt { get; init; }
+    [Required] public required DateTime UpdatedAt { get; init; }
 
     public static GetProductResponse CreateFrom(ProductModel product) => new()
     {
         Id = product.Id,
-        Name = product.Name
+        Name = product.Name,
+        CreatedAt = product.CreatedAt,
+        UpdatedAt = product.UpdatedAt,
     };
 }

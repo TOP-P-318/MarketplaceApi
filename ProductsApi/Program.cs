@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ProductsApi.Core.Constants;
 using ProductsApi.Core.Infrastructure.Db.Mappers;
 using ProductsApi.Modules.Products.Db.Entities;
 using ProductsApi.Modules.Products.Db.Mappers;
@@ -32,8 +33,8 @@ public static class Program
 
         #region Db
 
-        builder.Services.AddDbContext<AppDbContext>(
-            options => options.UseNpgsql(builder.Configuration.GetConnectionString("ProductsDB"))
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(builder.Configuration[Config.Db.Connection])
         );
 
         #endregion

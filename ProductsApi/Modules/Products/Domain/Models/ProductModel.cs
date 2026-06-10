@@ -1,5 +1,4 @@
-﻿using ProductsApi.Core.Infrastructure.Domain;
-using ProductsApi.Core.Infrastructure.Domain.Models;
+﻿using ProductsApi.Core.Infrastructure.Domain.Models;
 
 namespace ProductsApi.Modules.Products.Domain.Models;
 
