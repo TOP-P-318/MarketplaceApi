@@ -1,4 +1,11 @@
-using ProductsApi.Modules.Products.Domain.Mappers;
+using Microsoft.EntityFrameworkCore;
+using ProductsApi.Core.Infrastructure.Db.Mappers;
+using ProductsApi.Modules.Products.Db.Entities;
+using ProductsApi.Modules.Products.Db.Mappers;
+using ProductsApi.Modules.Products.Db.Repos;
+using ProductsApi.Modules.Products.Domain.Models;
+using ProductsApi.Modules.Products.Services;
+using ProductsApi.Modules.Shared.Db;
 
 namespace ProductsApi;
 
@@ -23,13 +30,29 @@ public static class Program
 
         #endregion
 
-        #region DI
+        #region Db
 
-        #region Mappers
-
-        builder.Services.AddSingleton<IProductMapper, ProductMapper>();
+        builder.Services.AddDbContext<AppDbContext>(
+            options => options.UseNpgsql(builder.Configuration.GetConnectionString("ProductsDB"))
+        );
 
         #endregion
+
+        #region Services DI
+
+        builder.Services.AddScoped<IProductsService, ProductsService>();
+
+        #endregion
+
+        #region Repos DI
+
+        builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
+
+        #endregion
+
+        #region Mappers DI
+
+        builder.Services.AddSingleton<IMapper<ProductModel, ProductEntity>, ProductMapper>();
 
         #endregion
 

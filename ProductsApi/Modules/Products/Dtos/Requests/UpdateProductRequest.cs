@@ -4,15 +4,16 @@ using ProductsApi.Modules.Products.Domain.Models;
 
 namespace ProductsApi.Modules.Products.Dtos.Requests;
 
-public sealed record AddProductRequest
+public sealed record UpdateProductRequest
 {
     [Required]
-    [StringLength(Limits.Product.Name.MaxLength)]
+    [MaxLength(Limits.Product.Name.MaxLength)]
     [MinLength(Limits.Product.Name.MinLength)]
     public required string Name { get; init; } = string.Empty;
 
-    public ProductModel ConvertToModel() => new()
+    public ProductModel ConvertToModel(Guid id) => new()
     {
+        Id = id,
         Name = Name
     };
 }

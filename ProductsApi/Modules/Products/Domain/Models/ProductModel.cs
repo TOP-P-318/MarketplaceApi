@@ -1,19 +1,15 @@
-﻿namespace ProductsApi.Modules.Products.Domain.Models;
+﻿using ProductsApi.Core.Infrastructure.Domain;
+using ProductsApi.Core.Infrastructure.Domain.Models;
 
-public sealed class ProductModel : IComparable<ProductModel>
+namespace ProductsApi.Modules.Products.Domain.Models;
+
+public sealed class ProductModel : ModelBase
 {
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     public override bool Equals(object? obj) =>
-        ReferenceEquals(this, obj) || 
-        obj is ProductModel other
-        && Name == other.Name;
+        obj is ProductModel
+        && base.Equals(obj);
 
-    public override int GetHashCode() => Name.GetHashCode();
-
-    public int CompareTo(ProductModel? other)
-    {
-        if (Equals(other)) return 0;
-        return other is null ? 1 : string.Compare(Name, other.Name, StringComparison.Ordinal);
-    }
+    public override int GetHashCode() => base.GetHashCode();
 }
