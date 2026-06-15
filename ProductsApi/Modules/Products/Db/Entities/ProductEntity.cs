@@ -8,6 +8,7 @@ public sealed class ProductEntity : EntityBase<ProductEntity>
 
     public override void Update(ProductEntity entity)
     {
+        base.Update(entity);
         Name = entity.Name;
     }
 }
