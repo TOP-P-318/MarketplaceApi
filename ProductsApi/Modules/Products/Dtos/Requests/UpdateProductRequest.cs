@@ -11,9 +11,5 @@ public sealed record UpdateProductRequest
     [MinLength(Limits.Product.Name.MinLength)]
     public required string Name { get; init; } = string.Empty;
 
-    public ProductModel ConvertToModel(Guid id) => new()
-    {
-        Id = id,
-        Name = Name
-    };
+
 }

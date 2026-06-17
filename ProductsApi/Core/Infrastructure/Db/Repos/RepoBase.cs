@@ -62,11 +62,4 @@ public abstract class RepoBase<TModel, TEntity>(
             .Where(predicate)
             .Select(e => mapper.MapToModel(e))
             .ToArrayAsync();
-
-    protected async Task PartialUpdateByIdAsync(Guid id, Action<TEntity> partialUpdate)
-    {
-        var entity = await set.FindAsync(id) ?? throw new KeyNotFoundException();
-        partialUpdate(entity);
-        await ctx.SaveChangesAsync();
-    }
 }

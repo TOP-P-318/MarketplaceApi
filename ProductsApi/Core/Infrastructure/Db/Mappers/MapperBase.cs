@@ -5,7 +5,7 @@ namespace ProductsApi.Core.Infrastructure.Db.Mappers;
 
 public abstract class MapperBase<TModel, TEntity> : IMapper<TModel, TEntity>
     where TModel : ModelBase, new()
-    where TEntity : EntityBase
+    where TEntity : EntityBase, new()
 {
     public virtual TModel MapToModel(TEntity entity) => new()
     {
@@ -14,5 +14,10 @@ public abstract class MapperBase<TModel, TEntity> : IMapper<TModel, TEntity>
         UpdatedAt = entity.UpdatedAt
     };
 
-    public abstract TEntity MapToEntity(TModel model);
+    public virtual TEntity MapToEntity(TModel model) => new()
+    {
+        Id = model.Id,
+        CreatedAt = model.CreatedAt,
+        UpdatedAt = model.UpdatedAt
+    };
 }

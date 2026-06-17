@@ -1,3 +1,4 @@
+using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 using ProductsApi.Core.Constants;
 using ProductsApi.Core.Infrastructure.Db.Mappers;
@@ -15,6 +16,12 @@ public static class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        if (builder.Environment.IsEnvironment(Config.Envs.Environment.Local))
+        {
+            DotEnv.Load();
+            builder.Configuration.AddEnvironmentVariables();
+        }
 
         #region Services
 
@@ -34,7 +41,7 @@ public static class Program
         #region Db
 
         builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(builder.Configuration[Config.Db.Connection])
+            options.UseNpgsql(builder.Configuration[Config.Envs.Db.Connection])
         );
 
         #endregion
@@ -59,7 +66,8 @@ public static class Program
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() ||
+            app.Environment.IsEnvironment(Config.Envs.Environment.Local))
         {
             app.MapOpenApi();
             app.UseSwagger();
