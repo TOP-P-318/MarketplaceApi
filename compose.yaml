@@ -12,7 +12,7 @@ services:
     ports:
       - "5032:8080"
     depends_on:
-      - products-db
+      - products-migrations
     restart: always
   
   products-db:
@@ -38,8 +38,8 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT}
       DB_CONNECTION: ${PRODUCTS_DB_CONNECTION}
     depends_on:
-      - products-api
-    restart: no
+      - products-db
+    restart: on-failure
 
 volumes:
   products-data:  

@@ -5,10 +5,12 @@ namespace ProductsApi.Modules.Products.Db.Entities;
 public sealed class ProductEntity : EntityBase<ProductEntity>
 {
     public string Name { get; set; } = string.Empty;
+    public string? PreviewUrl { get; set; }
 
     public override void Update(ProductEntity entity)
     {
         base.Update(entity);
         Name = entity.Name;
+        PreviewUrl = entity.PreviewUrl;
     }
 }
