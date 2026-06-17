@@ -2,6 +2,7 @@ using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 using ProductsApi.Core.Constants;
 using ProductsApi.Core.Infrastructure.Db.Mappers;
+using ProductsApi.Core.Utils;
 using ProductsApi.Modules.Products.Db.Entities;
 using ProductsApi.Modules.Products.Db.Mappers;
 using ProductsApi.Modules.Products.Db.Repos;
@@ -17,7 +18,7 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        if (builder.Environment.IsEnvironment(Config.Envs.Environment.Local))
+        if (builder.Environment.IsLocal())
         {
             DotEnv.Load();
             builder.Configuration.AddEnvironmentVariables();
@@ -67,7 +68,7 @@ public static class Program
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment() ||
-            app.Environment.IsEnvironment(Config.Envs.Environment.Local))
+            app.Environment.IsLocal())
         {
             app.MapOpenApi();
             app.UseSwagger();
