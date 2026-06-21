@@ -18,9 +18,9 @@ public sealed class ProductController(IProductsService productsService) : Contro
     }
 
     [HttpGet("{id:guid}", Name = Routes.Product.Name.Get)]
-    public async Task<ActionResult<GetProductResponse>> GetAsync([FromRoute] Guid id)
+    public async Task<ActionResult<GetProductDetailsResponse>> GetAsync([FromRoute] Guid id)
     {
-        var response = await productsService.GetAsync(id);
+        var response = await productsService.GetDetailsAsync(id);
         if (response == null) return NotFound();
         return Ok(response);
     }

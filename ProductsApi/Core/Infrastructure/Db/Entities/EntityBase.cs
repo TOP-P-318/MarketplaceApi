@@ -9,8 +9,8 @@ public abstract class EntityBase
 
 public abstract class EntityBase<TSelf> : EntityBase where TSelf : EntityBase<TSelf>
 {
-    public virtual void Update(TSelf entity)
+    public virtual void Update(TSelf other)
     {
-        UpdatedAt = entity.UpdatedAt;
+        UpdatedAt = other.UpdatedAt;
     }
 }

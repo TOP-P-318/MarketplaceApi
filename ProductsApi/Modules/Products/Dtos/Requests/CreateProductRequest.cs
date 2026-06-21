@@ -9,5 +9,4 @@ public sealed record CreateProductRequest
     [StringLength(Limits.Product.Name.MaxLength)]
     [MinLength(Limits.Product.Name.MinLength)]
     public required string Name { get; init; } = string.Empty;
-    public string? PreviewUrl { get; init; }
 }

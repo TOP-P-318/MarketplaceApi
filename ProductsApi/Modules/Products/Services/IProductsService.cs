@@ -5,8 +5,8 @@ namespace ProductsApi.Modules.Products.Services;
 
 public interface IProductsService
 {
-    Task<GetProductResponse?> GetAsync(Guid id);
-    Task<IEnumerable<GetProductResponse>> GetAllAsync();
+    Task<GetProductDetailsResponse?> GetDetailsAsync(Guid id);
+    Task<IEnumerable<GetProductPreviewResponse>> GetPreviewsAsync();
     Task<CreateProductResponse> AddAsync(CreateProductRequest request);
     Task<UpdateProductResponse> UpdateAsync(UpdateProductRequest request, Guid id);
     Task RemoveAsync(Guid id);

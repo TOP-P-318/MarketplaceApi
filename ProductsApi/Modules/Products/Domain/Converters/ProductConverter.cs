@@ -9,14 +9,26 @@ public static class ProductConverter
 {
     extension(ProductModel product)
     {
-        public GetProductResponse ConvertToGetProductResponse() =>
+        public GetProductPreviewResponse ConvertToGetProductPreviewResponse() =>
             new()
             {
                 Id = product.Id,
                 Name = product.Name,
-                PreviewUrl = product.PreviewUrl?.ToString(),
-                CreatedAt = product.CreatedAt,
-                UpdatedAt = product.UpdatedAt
+                PreviewUrl = product.ImageUrls.FirstOrDefault()?.ToString(),
+                Amount = product.Amount,
+                Price = product.Price.ToString(),
+            };
+
+        public GetProductDetailsResponse ConvertToGetProductDetailsResponse() =>
+            new()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ImageUrls = product.ImageUrls.Select(url => url.ToString()),
+                Amount = product.Amount,
+                Price = product.Price.ToString(),
+                Characteristics = product.Characteristics,
             };
 
         public CreateProductResponse ConvertToCreateProductResponse() =>
@@ -37,7 +49,6 @@ public static class ProductConverter
         new()
         {
             Name = request.Name,
-            PreviewUrl = request.PreviewUrl?.ToUri(),
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
@@ -47,6 +58,5 @@ public static class ProductConverter
             {
                 Id = id
             }
-            .WithUpdatedName(request.Name)
-            .WithUpdatedPreviewUrl(request.PreviewUrl?.ToUri());
+            .WithUpdatedName(request.Name);
 }

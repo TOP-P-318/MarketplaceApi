@@ -8,16 +8,16 @@ namespace ProductsApi.Modules.Products.Services;
 
 public sealed class ProductsService(IProductsRepo productsRepo) : IProductsService
 {
-    public async Task<GetProductResponse?> GetAsync(Guid id)
+    public async Task<GetProductDetailsResponse?> GetDetailsAsync(Guid id)
     {
         var product = await productsRepo.FindByIdAsync(id);
-        return product?.ConvertToGetProductResponse();
+        return product?.ConvertToGetProductDetailsResponse();
     }
 
-    public async Task<IEnumerable<GetProductResponse>> GetAllAsync()
+    public async Task<IEnumerable<GetProductPreviewResponse>> GetPreviewsAsync()
     {
         var products = await productsRepo.FindAllAsync();
-        return products.Select(ProductConverter.ConvertToGetProductResponse);
+        return products.Select(ProductConverter.ConvertToGetProductPreviewResponse);
     }
 
     public async Task<CreateProductResponse> AddAsync(CreateProductRequest request)

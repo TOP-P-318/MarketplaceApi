@@ -1,4 +1,5 @@
-﻿using ProductsApi.Core.Infrastructure.Db.Mappers;
+﻿using System.Collections.ObjectModel;
+using ProductsApi.Core.Infrastructure.Db.Mappers;
 using ProductsApi.Core.Utils;
 using ProductsApi.Modules.Products.Db.Entities;
 using ProductsApi.Modules.Products.Domain.Models;
@@ -11,7 +12,11 @@ public sealed class ProductMapper : MapperBase<ProductModel, ProductEntity>
     {
         var entity = base.MapToEntity(model);
         entity.Name = model.Name;
-        entity.PreviewUrl = model.PreviewUrl?.ToString();
+        entity.Description = model.Description;
+        entity.ImageUrls = model.ImageUrls.Select(url => url.ToString()).ToArray();
+        entity.Price = model.Price;
+        entity.Amount = model.Amount;
+        entity.Characteristics = model.Characteristics.ToDictionary();
         return entity;
     }
 
@@ -19,6 +24,10 @@ public sealed class ProductMapper : MapperBase<ProductModel, ProductEntity>
         base.MapToModel(entity) with
         {
             Name = entity.Name,
-            PreviewUrl = entity.PreviewUrl?.ToUri()
+            Description = entity.Description,
+            ImageUrls = entity.ImageUrls.Select(url => url.ToUri()!).ToArray(),
+            Price = entity.Price,
+            Amount = entity.Amount,
+            Characteristics = new ReadOnlyDictionary<string, string>(entity.Characteristics),
         };
 }

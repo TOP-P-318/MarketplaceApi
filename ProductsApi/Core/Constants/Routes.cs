@@ -17,7 +17,7 @@ public static class Routes
     {
         public static class Name
         {
-            public const string GetAll = "GetAllProducts";
+            public const string GetPreviews = "GetProductPreviews";
         }
     }
 }

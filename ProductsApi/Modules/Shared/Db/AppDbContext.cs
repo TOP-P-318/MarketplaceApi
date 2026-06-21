@@ -21,8 +21,26 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
                 .HasMaxLength(Limits.Product.Name.MaxLength)
                 .IsRequired();
 
-            entity.Property(e => e.PreviewUrl)
-                .HasColumnName("preview_url");
+            entity.Property(e => e.Description)
+                .HasColumnName("description")
+                .HasMaxLength(Limits.Product.Description.MaxLength);
+
+            entity.Property(e => e.ImageUrls)
+                .HasColumnName("image_urls")
+                .IsRequired();
+
+            entity.Property(e => e.Price)
+                .HasColumnName("price")
+                .IsRequired();
+
+            entity.Property(e => e.Amount)
+                .HasColumnName("amount")
+                .IsRequired();
+
+            entity.Property(e => e.Characteristics)
+                .HasColumnName("characteristics")
+                .HasColumnType("jsonb")
+                .IsRequired();
         });
     }
 }

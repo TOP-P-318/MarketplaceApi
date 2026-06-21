@@ -1,5 +1,6 @@
 using dotenv.net;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using ProductsApi.Core.Constants;
 using ProductsApi.Core.Infrastructure.Db.Mappers;
 using ProductsApi.Core.Utils;
@@ -41,10 +42,9 @@ public static class Program
 
         #region Db
 
-        builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(builder.Configuration[Config.Envs.Db.Connection])
-        );
-
+        builder.Services.AddNpgsql<AppDbContext>(builder.Configuration[Config.Envs.Db.Connection]);
+        NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
+        
         #endregion
 
         #region Services DI

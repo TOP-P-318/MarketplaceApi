@@ -9,10 +9,10 @@ namespace ProductsApi.Modules.Products;
 [Route("api/products")]
 public sealed class ProductsController(IProductsService productsService) : ControllerBase
 {
-    [HttpGet("all", Name = Routes.Products.Name.GetAll)]
-    public async Task<ActionResult<IEnumerable<GetProductResponse>>> GetAllAsync()
+    [HttpGet("previews", Name = Routes.Products.Name.GetPreviews)]
+    public async Task<ActionResult<IEnumerable<GetProductPreviewResponse>>> GetPreviewsAsync()
     {
-        var response = await productsService.GetAllAsync();
+        var response = await productsService.GetPreviewsAsync();
         return Ok(response);
     }
 }
