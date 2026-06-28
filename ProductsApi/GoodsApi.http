@@ -1,6 +1,0 @@
-@GoodsApi_HostAddress = http://localhost:5032
-
-POST {{GoodsApi_HostAddress}}/products
-Accept: application/json
-
-###

@@ -1,5 +1,53 @@
 ﻿name: marketplace-api-318
 services:
+  gateway-api:
+    container_name: gateway-api-318
+    image: nginx:alpine
+    ports:
+      - "6139:80"
+    volumes:
+      - ./GatewayApi/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - purchases-api
+      - products-api
+      - users-api
+    restart: unless-stopped
+  
+  
+  purchases-api:
+    container_name: purchases-api-318
+    image: purchases-api-318
+    build:
+      context: .
+      dockerfile: PurchaseApi/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT}
+      DB_CONNECTION: Host=database;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD};
+    expose:
+      - "8080"
+    volumes:
+      - dataprotection-keys:/home/app/.aspnet/keys
+    depends_on:
+      - migrations
+    restart: unless-stopped
+  
+  users-api:
+    container_name: users-api-318
+    image: users-api-318
+    build:
+      context: .
+      dockerfile: UsersApi/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT}
+      DB_CONNECTION: Host=database;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
+    expose:
+      - "8080"
+    volumes:
+      - dataprotection-keys:/home/app/.aspnet/keys
+    depends_on:
+      - migrations
+    restart: unless-stopped
+  
   products-api:
     container_name: products-api-318
     image: products-api-318
@@ -8,39 +56,41 @@ services:
       dockerfile: ProductsApi/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT}
-      DB_CONNECTION: ${PRODUCTS_DB_CONNECTION}
-    ports:
-      - "5032:8080"
-    depends_on:
-      - products-migrations
-    restart: always
-  
-  products-db:
-    container_name: products-db-318
-    image: postgres:18.4-alpine3.23
-    environment:
-      POSTGRES_DB: ${PRODUCTS_DB_NAME}
-      POSTGRES_USER: ${PRODUCTS_DB_USER}
-      POSTGRES_PASSWORD: ${PRODUCTS_DB_PASSWORD}
-    ports:
-      - "5033:5432"
+      DB_CONNECTION: Host=database;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD};
+    expose:
+      - "8080"
     volumes:
-      - products-data:/var/lib/postgresql
-    restart: always
+      - dataprotection-keys:/home/app/.aspnet/keys
+    depends_on:
+      - migrations
+    restart: unless-stopped
   
-  products-migrations:
-    container_name: products-migrations-318
-    image: products-migrations-318
+  migrations:
+    container_name: migrations-318
+    image: migrations-318
     build:
       context: .
-      dockerfile: ProductsMigrations/Dockerfile
+      dockerfile: Migrations/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT}
-      DB_CONNECTION: ${PRODUCTS_DB_CONNECTION}
+      DB_CONNECTION: Host=database;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD};
     depends_on:
-      - products-db
+      - database
     restart: on-failure
+  
+  database:
+    container_name: database-318
+    image: postgres:18.4-alpine3.23
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgresql
+    restart: unless-stopped
 
 volumes:
-  products-data:  
-
+  database-data:  
+  dataprotection-keys:
