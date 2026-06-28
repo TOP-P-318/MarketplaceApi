@@ -1,15 +1,15 @@
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using ProductsApi.Modules.Products;
-using ProductsApi.Products;
 using Shared.Constants;
 using Shared.Infrastructure;
-using Shared.Products;
+using Shared.Users;
 using Shared.Utils;
+using UsersApi.Auth;
 
-namespace ProductsApi;
+namespace UsersApi;
 
 public static class Program
 {
@@ -37,12 +37,15 @@ public static class Program
                 .Build()
         ));
 
-        builder.Services.AddScoped<ProductsService>();
-        builder.Services.AddScoped<ProductsRepo>();
-        builder.Services.AddSingleton<ProductMapper>();
+        builder.Services.AddScoped<UsersRepo>();
+        builder.Services.AddSingleton<UserMapper>();
+
+        builder.Services.AddScoped<UsersService>();
+        builder.Services.AddSingleton<PasswordHasher<UserModel>>();
 
         var app = builder.Build();
 
+        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();

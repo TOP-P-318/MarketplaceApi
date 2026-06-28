@@ -2,14 +2,15 @@ using dotenv.net;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using ProductsApi.Modules.Products;
-using ProductsApi.Products;
+using PurchaseApi.Purchase;
 using Shared.Constants;
 using Shared.Infrastructure;
 using Shared.Products;
+using Shared.Purchases;
+using Shared.Users;
 using Shared.Utils;
 
-namespace ProductsApi;
+namespace PurchaseApi;
 
 public static class Program
 {
@@ -37,12 +38,20 @@ public static class Program
                 .Build()
         ));
 
-        builder.Services.AddScoped<ProductsService>();
+        builder.Services.AddScoped<PurchaseService>();
+
+        builder.Services.AddScoped<UsersRepo>();
         builder.Services.AddScoped<ProductsRepo>();
+        builder.Services.AddScoped<PurchasesRepo>();
+        builder.Services.AddScoped<TransactionManager>();
+
+        builder.Services.AddSingleton<UserMapper>();
         builder.Services.AddSingleton<ProductMapper>();
+        builder.Services.AddSingleton<PurchaseMapper>();
 
         var app = builder.Build();
 
+        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
